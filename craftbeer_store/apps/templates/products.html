@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Craft Beers{% endblock %}
+
+{% block content %}
+<section class="products-page section-padding">
+    <div class="container">
+        <div class="page-header">
+            <h1>Our <span class="highlight">Collection</span></h1>
+            <p>Explore our carefully curated selection of craft beers</p>
+        </div>
+
+        <div class="products-layout">
+            <!-- Filters Sidebar -->
+            <aside class="filters-sidebar">
+                <div class="filter-section">
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a href="{% url 'products' %}" {% if not current_category %}class="active"{% endif %}>All</a></li>
+                        {% for category in categories %}
+                            <li>
+                                <a href="?category={{ category.slug }}" {% if current_category == category.slug %}class="active"{% endif %}>
+                                    {{ category.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div class="filter-section">
+                    <h3>Styles</h3>
+                    <ul>
+                        <li><a href="{% url 'products' %}" {% if not current_style %}class="active"{% endif %}>All</a></li>
+                        {% for style in styles %}
+                            <li>
+                                <a href="?style={{ style }}" {% if current_style == style %}class="active"{% endif %}>
+                                    {{ style }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="filter-section">
+                    <h3>Filters</h3>
+                    <div class="filter-group">
+                        <label>
+                            <input type="checkbox" id="in-stock-only"> In Stock Only
+                        </label>
+                        <label>
+                            <input type="checkbox" id="featured-only"> Featured Only
+                        </label>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Products Grid -->
+            <div class="products-container">
+                <div class="products-header">
+                    <span>{{ products.count }} products found</span>
+                    <div class="sort-options">
+                        <label for="sort">Sort by:</label>
+                        <select id="sort">
+                            <option value="name">Name</option>
+                            <option value="price">Price: Low to High</option>
+                            <option value="-price">Price: High to Low</option>
+                            <option value="-created_at">Newest</option>
+                            <option value="abv">ABV: Low to High</option>
+                            <option value="-abv">ABV: High to Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="product-grid">
+                    {% for product in products %}
+                        <div class="product-card">
+                            <div class="product-image">
+                                {% if product.image %}
+                                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                                {% else %}
+                                    <img src="https://via.placeholder.com/300x300?text={{ product.name }}" alt="{{ product.name }}">
+                                {% endif %}
+                                <div class="product-actions">
+                                    <button class="quick-view" data-id="{{ product.id }}"><i class="fas fa-eye"></i></button>
+                                    <button class="add-to-cart" data-id="{{ product.id }}"><i class="fas fa-shopping-cart"></i></button>
+                                    <button class="add-to-wishlist" data-id="{{ product.id }}"><i class="fas fa-heart"></i></button>
+                                </div>
+                                <span class="badge style-badge">{{ product.style }}</span>
+                            </div>
+                            <div class="product-info">
+                                <h3><a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a></h3>
+                                <div class="product-meta">
+                                    <span>ABV: {{ product.abv }}%</span>
+                                    <span>IBU: {{ product.ibu }}</span>
+                                </div>
+                                <div class="product-price">
+                                    <span>${{ product.price }}</span>
+                                    {% if product.stock_quantity > 0 %}
+                                        <span class="in-stock"><i class="fas fa-check-circle"></i> In Stock</span>
+                                    {% else %}
+                                        <span class="out-of-stock"><i class="fas fa-times-circle"></i> Out of Stock</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="no-products">
+                            <i class="fas fa-beer"></i>
+                            <h3>No products found</h3>
+                            <p>Try adjusting your filters or search criteria</p>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination -->
+                {% if products.has_other_pages %}
+                    <div class="pagination">
+                        {% if products.has_previous %}
+                            <a href="?page={{ products.previous_page_number }}" class="page-link">&laquo;</a>
+                        {% endif %}
+                        {% for i in products.paginator.page_range %}
+                            <a href="?page={{ i }}" class="page-link {% if products.number == i %}active{% endif %}">{{ i }}</a>
+                        {% endfor %}
+                        {% if products.has_next %}
+                            <a href="?page={{ products.next_page_number }}" class="page-link">&raquo;</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

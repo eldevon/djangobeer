@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Craft Beer Store - Premium Craft Beers{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Discover the Art of <span class="highlight">Craft Beer</span></h1>
+            <p>Explore our curated collection of premium craft beers from the finest breweries around the world.</p>
+            <a href="{% url 'products' %}" class="btn btn-primary">Explore Collection</a>
+        </div>
+        <div class="hero-image">
+            <img src="{% static 'images/hero-beer.jpg' %}" alt="Craft Beer Selection" onerror="this.src='https://via.placeholder.com/500x400?text=Craft+Beer'">
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<section class="featured-products section-padding">
+    <div class="container">
+        <h2 class="section-title">Featured <span class="highlight">Brews</span></h2>
+        <div class="product-grid">
+            {% for product in featured_products %}
+                <div class="product-card">
+                    <div class="product-image">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="https://via.placeholder.com/300x300?text={{ product.name }}" alt="{{ product.name }}">
+                        {% endif %}
+                        {% if product.is_featured %}
+                            <span class="badge featured">Featured</span>
+                        {% endif %}
+                        <div class="product-actions">
+                            <button class="quick-view" data-id="{{ product.id }}"><i class="fas fa-eye"></i></button>
+                            <button class="add-to-cart" data-id="{{ product.id }}"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3><a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a></h3>
+                        <div class="product-meta">
+                            <span class="style">{{ product.style }}</span>
+                            <span class="abv">{{ product.abv }}% ABV</span>
+                        </div>
+                        <div class="product-price">
+                            <span>${{ product.price }}</span>
+                            {% if product.stock_quantity > 0 %}
+                                <span class="in-stock">In Stock</span>
+                            {% else %}
+                                <span class="out-of-stock">Out of Stock</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No featured products available.</p>
+            {% endfor %}
+        </div>
+        <div class="text-center">
+            <a href="{% url 'products' %}" class="btn btn-secondary">View All Products</a>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="categories section-padding">
+    <div class="container">
+        <h2 class="section-title">Browse by <span class="highlight">Category</span></h2>
+        <div class="category-grid">
+            {% for category in categories %}
+                <a href="{% url 'products' %}?category={{ category.slug }}" class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-beer"></i>
+                    </div>
+                    <h3>{{ category.name }}</h3>
+                    <p>{{ category.description|truncatechars:50 }}</p>
+                </a>
+            {% empty %}
+                <p>No categories available.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- About Preview -->
+<section class="about-preview section-padding">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Our <span class="highlight">Story</span></h2>
+                <p>Founded in 2010, CraftBeer Store has been dedicated to bringing the finest craft beers to enthusiasts everywhere. We work directly with local breweries to curate a selection that celebrates the art and science of brewing.</p>
+                <ul class="features">
+                    <li><i class="fas fa-check-circle"></i> Curated selection of 50+ craft beers</li>
+                    <li><i class="fas fa-check-circle"></i> Direct from local breweries</li>
+                    <li><i class="fas fa-check-circle"></i> Expert guidance and tasting notes</li>
+                    <li><i class="fas fa-check-circle"></i> Fast shipping and secure packaging</li>
+                </ul>
+                <a href="{% url 'about' %}" class="btn btn-primary">Learn More</a>
+            </div>
+            <div class="about-image">
+                <img src="{% static 'images/about-brewery.jpg' %}" alt="Brewery" onerror="this.src='https://via.placeholder.com/400x400?text=Our+Story'">
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

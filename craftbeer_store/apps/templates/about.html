@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us - Craft Beer Store{% endblock %}
+
+{% block content %}
+<section class="about-page section-padding">
+    <div class="container">
+        <div class="page-header text-center">
+            <h1>About <span class="highlight">Us</span></h1>
+            <p>Passionate about craft beer since 2010</p>
+        </div>
+
+        <div class="about-story">
+            <div class="story-content">
+                <div class="story-text">
+                    <h2>Our Mission</h2>
+                    <p>At CraftBeer Store, we believe that great beer is more than just a drink—it's an experience, a craft, and a community. Our mission is to bring the best craft beers from local breweries to enthusiasts who appreciate the art of brewing.</p>
+                    
+                    <h2>Quality First</h2>
+                    <p>We carefully select every beer in our collection, focusing on quality, flavor, and the story behind each brew. Our team of beer enthusiasts works directly with brewers to ensure we only offer the finest products.</p>
+                    
+                    <h2>Sustainability</h2>
+                    <p>We're committed to sustainable practices, from our packaging to our partnerships with eco-conscious breweries. We believe in protecting the planet while enjoying its finest brews.</p>
+                </div>
+                <div class="story-image">
+                    <img src="{% static 'images/about-brewery-wide.jpg' %}" alt="Brewery Tour" onerror="this.src='https://via.placeholder.com/600x400?text=Brewery'">
+                </div>
+            </div>
+        </div>
+
+        <div class="values-section">
+            <h2>Our <span class="highlight">Values</span></h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Community</h3>
+                    <p>Building connections between brewers and beer lovers</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-flask"></i>
+                    <h3>Craftsmanship</h3>
+                    <p>Celebrating the art and science of brewing</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Sustainability</h3>
+                    <p>Protecting our planet through responsible practices</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Passion</h3>
+                    <p>Dedicated to sharing our love for great beer</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="team-section">
+            <h2>Meet Our <span class="highlight">Team</span></h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="{% static 'images/team/team1.jpg' %}" alt="Team Member" onerror="this.src='https://via.placeholder.com/200x200?text=Team'">
+                    <h3>John Doe</h3>
+                    <p>Head Brewer</p>
+                </div>
+                <div class="team-member">
+                    <img src="{% static 'images/team/team2.jpg' %}" alt="Team Member" onerror="this.src='https://via.placeholder.com/200x200?text=Team'">
+                    <h3>Jane Smith</h3>
+                    <p>Master Taster</p>
+                </div>
+                <div class="team-member">
+                    <img src="{% static 'images/team/team3.jpg' %}" alt="Team Member" onerror="this.src='https://via.placeholder.com/200x200?text=Team'">
+                    <h3>Mike Johnson</h3>
+                    <p>Operations Manager</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
