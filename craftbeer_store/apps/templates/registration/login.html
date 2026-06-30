@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login - Craft Beer Store{% endblock %}
+
+{% block content %}
+<section class="login-page section-padding">
+    <div class="container">
+        <div class="login-container">
+            <div class="login-box">
+                <h2>Welcome Back</h2>
+                <p>Login to access your account</p>
+                
+                <form method="post" class="login-form">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                        <div class="alert alert-error">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Invalid username or password. Please try again.
+                        </div>
+                    {% endif %}
+                    
+                    <div class="form-group">
+                        <label for="id_username">Username</label>
+                        <input type="text" name="username" id="id_username" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="id_password">Password</label>
+                        <input type="password" name="password" id="id_password" class="form-control" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </form>
+                
+                <div class="login-footer">
+                    <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+                    <p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

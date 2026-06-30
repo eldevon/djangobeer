@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Register - Craft Beer Store{% endblock %}
+
+{% block content %}
+<section class="register-page section-padding">
+    <div class="container">
+        <div class="login-container">
+            <div class="login-box">
+                <h2>Create Account</h2>
+                <p>Join our craft beer community</p>
+                
+                <form method="post" class="login-form">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                        <div class="alert alert-error">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Please correct the errors below.
+                        </div>
+                    {% endif %}
+                    
+                    <div class="form-group">
+                        <label for="id_username">Username</label>
+                        <input type="text" name="username" id="id_username" class="form-control" required>
+                        {% if form.username.errors %}
+                            <span class="error-text">{{ form.username.errors }}</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="id_password1">Password</label>
+                        <input type="password" name="password1" id="id_password1" class="form-control" required>
+                        <small class="help-text">Password must be at least 8 characters.</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="id_password2">Confirm Password</label>
+                        <input type="password" name="password2" id="id_password2" class="form-control" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+                </form>
+                
+                <div class="login-footer">
+                    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
